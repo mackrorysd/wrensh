@@ -1,17 +1,8 @@
+import math
 import re
 
-# To add:
-# negative numbers to tail and head
-# awk
-# cut
-# expand
-# unexpand
-# tr
-# sed
-# curl
-# binary Wrensh: zipping, conversions
-# streaming
-# multiprocessing
+def _is_neg_zero(x):
+    return x == 0 and math.copysign(1, x) < 0
 
 def cat(*files):
     return TextWrensh().cat(*files)
@@ -42,7 +33,8 @@ class TextWrensh(object):
         with open(file, "a") as f:
             f.write(str(self) + "\n")
 
-    # Other
+    # Higher-order functions
+
     def map(self, f):
         out = TextWrensh()
         for x in self.pipe:
@@ -72,7 +64,7 @@ class TextWrensh(object):
 
     def head(self, n=10):
         out = TextWrensh()
-        if len(self.pipe) < n:
+        if n > len(self.pipe) or _is_neg_zero(n):
             out.pipe = self.pipe
         else:
             out.pipe = self.pipe[:n]
@@ -86,9 +78,13 @@ class TextWrensh(object):
 
     def tail(self, n=10):
         out = TextWrensh()
-        if len(self.pipe) < n:
+        if n > len(self.pipe):
             out.pipe = self.pipe
         else:
+            if n == 0:
+                return out
+            if n < 0:
+                n += 1
             out.pipe = self.pipe[-n:]
         return out
 

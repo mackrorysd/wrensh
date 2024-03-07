@@ -32,22 +32,20 @@ def test_sort_uniq():
 
 def test_head_tail():
     whole = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-
     sh = text.TextWrensh(whole)
-    sh = sh.head(5)
-    assert sh.pipe == ["0", "1", "2", "3", "4"]
 
-    sh = text.TextWrensh(whole)
-    sh = sh.tail(5)
-    assert sh.pipe == ["5", "6", "7", "8", "9"]
+    assert sh.head(3).pipe == ["0", "1", "2"]
+    assert sh.head(-6).pipe == ["0", "1", "2", "3"]
+    assert sh.head(0).pipe == []
+    assert sh.head(-0.).pipe == whole
 
-    sh = text.TextWrensh(whole)
-    sh = sh.head(15)
-    assert sh.pipe == whole
+    assert sh.tail(3).pipe == ["7", "8", "9"]
+    assert sh.tail(-6).pipe == ["5", "6", "7", "8", "9"]
+    assert sh.tail(0).pipe == []
+    assert sh.head(-0.).pipe == whole
 
-    sh = text.TextWrensh(whole)
-    sh = sh.tail(15)
-    assert sh.pipe == whole
+    assert sh.head(15).pipe == whole
+    assert sh.tail(15).pipe == whole
 
 def test_grep():
     haystack = "Maybe you should use a pitch fork instead of a needle next time".split(" ")

@@ -99,8 +99,7 @@ sh.pipe
 
 Ideas for future work include:
 
-- negative numbers to tail and head
-- additional POSIX tools (awk, cut, expand, unexpand, tr, sed, curl
+- additional POSIX tools (awk, cut, expand, unexpand, tr, sed, curl)
 - additional higher order functions (filter, apply)
 - maybe support for binary formats: zipping, conversions
 - streaming
